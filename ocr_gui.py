@@ -322,18 +322,30 @@ def select_params(img_path, ocr, font_path, user_check=True, thres=10):
                 continue
 
             # selected person is right
-            elif keyboardSet == ord('d') or keyboardSet == ord('D'): # delete
-                del_list.append(select_id)
-                bboxes_copy = np.delete(np.array(bboxes_copy), [select_id], axis=0)
-                txts = np.delete(np.array(txts), [select_id], axis=0).tolist()
-                scores = np.delete(np.array(scores), [select_id], axis=0).tolist()
-                boxes = np.delete(np.array(boxes), [select_id], axis=0).tolist()
+            elif keyboardSet == ord('d') or keyboardSet == ord('D'):  # delete
+                if select_id is not None:
+                    # 确保 select_id 是整数列表
+                    if isinstance(select_id, (list, np.ndarray)):
+                        idxs = [int(i) for i in np.array(select_id).flatten()]
+                    else:
+                        idxs = [int(select_id)]
 
-                img_bbox, _, _ = draw_ocr(img.copy(), boxes, txts, scores, font_path=font_path)
-                img_render_copy = img_bbox.copy()
+                    del_list.extend(idxs)  # 保存删除的索引
 
-                select_bbox_flag = False
-                select_all_bbox_flag = False
+                    # 删除对应框、文字和分数
+                    bboxes_copy = np.delete(np.array(bboxes_copy), idxs, axis=0)
+                    txts = np.delete(np.array(txts), idxs, axis=0).tolist()
+                    scores = np.delete(np.array(scores), idxs, axis=0).tolist()
+                    boxes = np.delete(np.array(boxes), idxs, axis=0).tolist()
+
+                    # 重新绘制图像
+                    img_bbox, _, _ = draw_ocr(img.copy(), boxes, txts, scores, font_path=font_path)
+                    img_render_copy = img_bbox.copy()
+
+                    # 重置标志
+                    select_bbox_flag = False
+                    select_all_bbox_flag = False
+                    select_id = None
 
             # vis mesh and original img
             elif keyboardSet == ord('s') or keyboardSet == ord('S'):
