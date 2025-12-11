@@ -38,7 +38,7 @@ def poi_detect(source_path):
 
         for i in range(start, end):
             img_path = os.path.join(img_folder, f"{i:0{num_digits}d}.png")
-            poi_boxes, poi_txts, poi_scores, im_show, success_save = select_params(img_path, ocr, font_path=os.path.join(current_dir, "POIProcess/fonts/simfang.ttf"))
+            poi_boxes, poi_txts, poi_scores, im_show, success_save = select_params(img_path, ocr, font_path=os.path.join(current_dir, "fonts/simfang.ttf"))
 
             if poi_boxes is None:
                 continue

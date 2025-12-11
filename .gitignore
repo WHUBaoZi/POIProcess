@@ -1,4 +1,5 @@
 poi_env/
+venv/
 __pycache__/
 fonts/
 ppasr/
