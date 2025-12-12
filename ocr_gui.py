@@ -193,6 +193,8 @@ def select_params(img_path, ocr, font_path, user_check=True, thres=10):
     img = cv2.imread(img_path)
     result = ocr.ocr(img_path, cls=True)
 
+    success_save = True
+
     if result[0] is None:
         return None, None, None, None, False
 

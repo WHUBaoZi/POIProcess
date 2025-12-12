@@ -10,5 +10,5 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 if __name__ == "__main__":
-    result = poi_detect.poi_detect("../../testdata")
+    result = poi_detect.poi_detect("/home/unitree/poi_detect/poi_detect/src/poi_algorithm/testdata")
     rospy.loginfo("Test result: %s" % str(result))

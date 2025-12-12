@@ -13,7 +13,7 @@ def poi_detect(source_path):
 
     ocr_detected_images = {}
     # os.makedirs(output_path, exist_ok=True)
-    current_dir = os.getcwd()
+    current_dir = os.path.dirname(os.path.abspath(__file__))
 
     predictor = PPASRPredictor(model_tag='conformer_streaming_fbank_wenetspeech')
     ocr = PaddleOCR(use_angle_cls=True, lang="en")  # need to run only once to download and load model into memory
@@ -38,7 +38,7 @@ def poi_detect(source_path):
 
         for i in range(start, end):
             img_path = os.path.join(img_folder, f"{i:0{num_digits}d}.png")
-            poi_boxes, poi_txts, poi_scores, im_show, success_save = select_params(img_path, ocr, font_path=os.path.join(current_dir, "fonts/simfang.ttf"))
+            poi_boxes, poi_txts, poi_scores, im_show, success_save = select_params(img_path, ocr, font_path=os.path.join(current_dir, "fonts/simfang.ttf"), user_check = False)
 
             if poi_boxes is None:
                 continue
